@@ -1,0 +1,18 @@
+{
+  "id": "gen4_dex_limit",
+  "name": "Gen 4 Pokédex Limit",
+  "version": "1.0.0",
+  "api": 2,
+  "entry": "main.lua",
+  "profile": "ui",
+  "github": "Panduino/gen1recomp-national-dex-dumbaimodbullcrapdontuse",
+  "games": ["gen1", "gen2"],
+  "category": "UI",
+  "game_version": ">=0.0.0-0 <2.0.0",
+  "priority": 100,
+  "permissions": ["engine_internals"],
+  "dependencies": ["national_dex"],
+  "optional_dependencies": [],
+  "conflicts": [],
+  "description": "Companion mod for National Dex that keeps the full National Dex registered while limiting the visible Pokédex listing to Pokémon #001-#493 (Generations 1-4)."
+}
