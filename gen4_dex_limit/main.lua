@@ -64,8 +64,27 @@ end
 return function(mod)
   local installedGen1 = installGen1(mod)
   local installedGen2 = false
-  local okGame, game = pcall(function() return mod.game end)
-  local generation = okGame and game and game.generation or nil
+
+  -- Use the same sanctioned generation probe as National Dex. mod.game does
+  -- not expose a stable generation field during mod initialization.
+  local generation = 1
+  local okGeneration, value = pcall(function()
+    return mod.content.constants:get("generation")
+  end)
+  if okGeneration and type(value) == "number" then
+    generation = value
+  else
+    -- Gold's Pokémon records have split Special Attack/Defense; Gen 1's do
+    -- not. This is the same fallback used by National Dex's gen2shape.lua.
+    local okRecord, record = pcall(function()
+      return mod.content.pokemon:get("BULBASAUR")
+    end)
+    if okRecord and type(record) == "table"
+      and type(record.baseStats) == "table"
+      and type(record.baseStats.specialAttack) == "number" then
+      generation = 2
+    end
+  end
 
   if generation == 2 then
     installedGen2 = installGen2(mod)
